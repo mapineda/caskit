@@ -28,5 +28,5 @@ import { NoteCard } from '../ui';
   `
 })
 export class Notes {
-  note = { title: 'new note', value: 'note here'}
+  note = { title: 'Adventure', value: 'By the end of 2016, I am skydiving in Yosemite ', color: '#fce220'};
 };
