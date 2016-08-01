@@ -1,6 +1,20 @@
 # Caskit
 Angular 2.0 app
 
+## Description
+
+Caskit is a place for people to write down and share and accomplish their bucket list with their friends, families and like-minded individuals!
+
+UI inspired by Google Keep. 
+
+## Tech Used:
+
+* Angular2
+* Typescript
+* Bootstrap
+* Node
+* npm
+* webpack
 
 ## Dependencies
 * `Node > 6.x`
