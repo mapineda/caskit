@@ -1,4 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 
 @Component({
   selector: 'note-card',
@@ -8,6 +13,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
       border-radius: 2px;
       width: 100%;
       position: relative;
+      margin-bottom: 20px;
     }
     .title {
       font-size: 1.2rem;
@@ -36,30 +42,34 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   `],
   template: `
     <div
-    [ngStyle]="{'background-color': note.color}"
-    class='note-card row shadow-1' (mouseenter)='toggle()' (mouseleave)='toggle()'
+      class="note-card row shadow-1"
+      [ngStyle]="{'background-color': note.color}"
+      (mouseenter)="toggleCheck()"
+      (mouseleave)="toggleCheck()"
     >
-      <div class='icon' *ngIf='showCheck' (click)='onChecked()'>
-        <i class='material-icons'>check</i>
+      <div class="icon" *ngIf="showCheck" (click)="onChecked()">
+        <i class="material-icons">check</i>
       </div>
-      <div class='col-xs-12 title'>
+      <div class="col-xs-12 title">
         {{ note.title }}
       </div>
-      <div class='col-xs-12 value'>
+      <div class="col-xs-12 value">
         {{ note.value }}
       </div>
     </div>
   `
 })
 export class NoteCard {
-  @Input() note = {}
+  @Input() note = {};
   @Output() checked = new EventEmitter();
+
   showCheck: boolean = false;
 
-  toggle() {
+  toggleCheck() {
     this.showCheck = !this.showCheck;
   }
+
   onChecked() {
-    this.checked.emit(this.note);
+    this.checked.next(this.note);
   }
-};
+}

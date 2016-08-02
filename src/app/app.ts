@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Main} from './containers';
+import { Component } from '@angular/core';
+import { Main } from './containers';
 
 @Component({
   selector: 'app',

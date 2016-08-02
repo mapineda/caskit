@@ -9,14 +9,12 @@ import { Notes } from './notes';
     Notes
   ],
   template: `
-    <div>
+    <div class="main-container">
       <app-bar></app-bar>
-      <main class='main'>
+      <main class="main">
         <notes-container></notes-container>
       </main>
     </div>
   `
-
 })
-
-export class Main {};
+export class Main {}
