@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NoteCard, NoteCreator } from '../ui';
+import { NoteService } from '../services';
 
 @Component({
   selector: 'notes-container',
@@ -8,25 +9,25 @@ import { NoteCard, NoteCreator } from '../ui';
     NoteCreator
   ],
   styles: [`
-  .notes {
-    padding-top: 50px;
-  }
-  .creator {
-    margin-bottom: 40px;
-  }
+    .notes {
+      padding-top: 50px;
+    }
+    .creator {
+      margin-bottom: 40px;
+    }
   `],
   template: `
-    <div class='row center-xs notes'>
-      <div class='col-xs-6 creator'>
-      <note-creator (createNote)='onCreateNote($event)'></note-creator>
+    <div class="row center-xs notes">
+      <div class="col-xs-6 creator">
+        <note-creator (createNote)="onCreateNote($event)"></note-creator>
       </div>
-      <div class='notes col-xs-8'>
-        <div class='row between-xs'>
+      <div class="notes col-xs-8">
+        <div class="row between-xs">
           <note-card
-          class='col-xs-4'
-          [note]='note'
-          *ngFor='let note of notes; let i = index'
-          (checked)="onNoteChecked($event, i)"
+            class="col-xs-4"
+            [note]="note"
+            *ngFor="let note of notes; let i = index"
+            (checked)="onNoteChecked($event)"
           >
           </note-card>
         </div>
@@ -35,17 +36,24 @@ import { NoteCard, NoteCreator } from '../ui';
   `
 })
 export class Notes {
-  notes = [
-  {title: 'Adventure', value: 'By the end of 2016, I am skydiving in Yosemite ', color: '#fce220'},
-  {title: 'Education', value: 'By Jan 1st, 2017, I engage a native Portuguese speaker in 15min conversation ', color: '#fe848c'},
-  {title: 'Material', value: 'By the end of 2018, I am driving my digital nomadic camper cross-country', color: '#c197c7'}
-  ]
+  notes = [];
 
-  onNoteChecked(note, i) {
-    this.notes.splice(i, 1);
+  constructor(private noteService: NoteService) {
+    this.noteService.getNotes()
+    .subscribe(res => this.notes = res.data);
   }
 
   onCreateNote(note) {
-    this.notes.push(note);
+    this.noteService.createNote(note)
+    .subscribe(note => this.notes.push(note));
+  }
+
+  onNoteChecked(note) {
+    this.noteService.completeNote(note)
+    .subscribe(note => {
+      const i = this.notes.findIndex(localNote => localNote.id === note.id);
+      this.notes.splice(i, 1);
+    });
+
   }
 }
